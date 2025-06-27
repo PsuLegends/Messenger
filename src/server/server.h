@@ -2,7 +2,10 @@
 
 #include <App.h>
 #include <string>
-
+#include <string_view>
+#include "json.hpp"
+using json = nlohmann::json;
+namespace fs = std::filesystem;
 class WebSocketServer {
 public:
     explicit WebSocketServer(int port = 9001);

@@ -2,7 +2,7 @@ CXX = g++
 # Флаги для Qt
 QT_CFLAGS = $(shell pkg-config --cflags Qt5Core Qt5Sql)
 # Добавляем -fPIC явно
-CXXFLAGS = -std=c++17 -fPIC -Ilib/uWebSockets/src -Ilib/uWebSockets/uSockets/src $(QT_CFLAGS) -O3
+CXXFLAGS = -std=c++20 -fPIC -Ilib/uWebSockets/src -Ilib/uWebSockets/uSockets/src $(QT_CFLAGS) -O3
 # Библиотеки Qt
 QT_LIBS = $(shell pkg-config --libs Qt5Core Qt5Sql)
 LDFLAGS = -Llib/uWebSockets/uSockets

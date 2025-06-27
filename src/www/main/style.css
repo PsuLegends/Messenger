@@ -1,0 +1,50 @@
+/* Подключаем тот же шрифт, чтобы сохранить единый стиль */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f6f5f7; /* Тот же фон, что и на странице входа */
+    font-family: 'Poppins', sans-serif;
+}
+
+.main-content {
+    text-align: center;
+    color: #333;
+}
+
+.main-content h1 {
+    font-weight: 700;
+    font-size: 2.5rem;
+}
+
+.main-content p {
+    font-size: 1.1rem;
+    color: #555;
+}
+
+#logoutButton {
+    margin-top: 30px;
+    border-radius: 20px;
+    border: 2px solid #ff4b2b;
+    background-color: #ff4b2b;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: transform 80ms ease-in, box-shadow 0.2s;
+}
+
+#logoutButton:hover {
+    box-shadow: 0 5px 15px rgba(255, 75, 43, 0.4);
+}
+
+#logoutButton:active {
+    transform: scale(0.95);
+}

@@ -1,0 +1,99 @@
+/* components/header/header.css (ОБНОВЛЕННАЯ ВЕРСИЯ) */
+
+.header-content {
+    /* ИЗМЕНЕНО: Заставляем контент занять всю высоту родительского блока #header (10vh) */
+    height: 100%; 
+    padding: 10px 25px;
+    background-color: var(--bg-secondary); /* ИЗМЕНЕНО */
+    border-bottom: 1px solid var(--border-color); /* ИЗМЕНЕНО */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+/* ... остальные стили остаются без изменений ... */
+.header-left, .header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+}
+/* ... и так далее, скопируй сюда остаток твоего файла header.css ... */
+
+/* Убедись, что остальная часть файла такая же, как была в твоем проекте */
+.menu-container {
+    position: relative;
+}
+.menu-button {
+    background: none;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary); /* ИЗМЕНЕНО */
+    transition: background-color 0.2s, color 0.2s;
+}
+.menu-button:hover {
+    background-color: var(--border-color); /* ИЗМЕНЕНО */
+    color: var(--text-primary);          /* ИЗМЕНЕНО */
+}
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0; 
+    margin-top: 10px;
+    background-color: var(--bg-tertiary);        /* ИЗМЕНЕНО */
+    border: 1px solid var(--border-color-strong); /* ИЗМЕНЕНО */
+    border-radius: 8px;
+    box-shadow: 0 8px 16px var(--shadow-color); /* ИЗМЕНЕНО */
+    min-width: 160px;
+    z-index: 1000;
+    overflow: hidden;
+}
+.dropdown-menu.show {
+    display: block;
+}
+.dropdown-menu a {
+    color: var(--text-primary); /* ИЗМЕНЕНО */
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.2s;
+}
+.dropdown-menu a:first-child {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+.dropdown-menu a:last-child {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+.dropdown-menu a:hover {
+    background-color: var(--border-color); /* ИЗМЕНЕНО */
+}
+.profile-stub, .header-left {
+    color: var(--text-secondary); /* ИЗМЕНЕНО */
+    transition: color 0.2s;
+}
+.header-left:hover {
+    color: var(--text-primary); /* ИЗМЕНЕНО */
+}
+@media (max-width: 480px) {
+    .header-content {
+        padding: 10px 15px;
+    }
+    .header-left, .header-right {
+        gap: 10px;
+    }
+    .header-left svg {
+        width: 28px;
+        height: 28px;
+    }
+    .profile-stub svg {
+        width: 24px;
+        height: 24px;
+    }
+}

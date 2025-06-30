@@ -1,0 +1,56 @@
+/* components/auth/auth.css */
+
+/* Контейнер, который центрирует нашу форму на экране */
+.auth-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Сама форма */
+.auth-form {
+    background-color: var(--bg-secondary); /* ИЗМЕНЕНО */
+    padding: 40px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color); /* ИЗМЕНЕНО */
+    box-shadow: 0 10px 30px var(--shadow-color); /* ИЗМЕНЕНО */
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.auth-form h1 {
+    margin-bottom: 25px;
+    font-size: 2rem;
+}
+
+.auth-form .form-input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid var(--border-color-strong); /* ИЗМЕНЕНО */
+    background-color: var(--bg-tertiary);        /* ИЗМЕНЕНО */
+    color: var(--text-primary);                 /* ИЗМЕНЕНО */
+    font-size: 16px;
+}
+
+.auth-form .form-button {
+    width: 100%;
+    padding: 12px 15px;
+    border-radius: 8px;
+    border: none;
+    background-color: var(--accent-color);       /* ИЗМЕНЕНО */
+    color: var(--text-on-accent);              /* ИЗМЕНЕНО */
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.auth-form .form-button:hover {
+    background-color: var(--accent-color-hover); /* ИЗМЕНЕНО */
+}

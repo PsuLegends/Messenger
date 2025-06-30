@@ -1,0 +1,45 @@
+/* components/theme-switcher/theme.css */
+
+/* 
+  :root — это как бы "глобальный" элемент. 
+  Здесь мы определяем переменные для нашей темы по умолчанию (темной).
+*/
+:root {
+  --bg-primary: #121212;        /* Основной фон (самый темный) */
+  --bg-secondary: #1e1e1e;      /* Второстепенный фон (чуть светлее) */
+  --bg-tertiary: #2b2b2b;       /* Третичный фон (для меню, полей ввода) */
+  
+  --text-primary: #e0e0e0;      /* Основной текст */
+  --text-secondary: #a0a0a0;     /* Второстепенный, неактивный текст */
+  --text-on-accent: #ffffff;    /* Текст на цветных кнопках */
+  
+  --border-color: #333;         /* Цвет рамок и разделителей */
+  --border-color-strong: #444;  /* Более заметная рамка */
+  
+  --accent-color: #0d6efd;       /* Основной цветной акцент (синий) */
+  --accent-color-hover: #0b5ed7; /* Акцент при наведении */
+  
+  --shadow-color: rgba(0, 0, 0, 0.5); /* Цвет тени */
+}
+
+/* 
+  Когда мы добавим к <body> класс "light-theme", 
+  все эти переменные будут ПЕРЕОПРЕДЕЛЕНЫ на новые значения.
+*/
+body.light-theme {
+  --bg-primary: #f8f9fa;
+  --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f3f5;
+  
+  --text-primary: #212529;
+  --text-secondary: #6c757d;
+  --text-on-accent: #ffffff;
+  
+  --border-color: #dee2e6;
+  --border-color-strong: #ced4da;
+  
+  --accent-color: #0d6efd;
+  --accent-color-hover: #0b5ed7;
+  
+  --shadow-color: rgba(0, 0, 0, 0.15);
+}

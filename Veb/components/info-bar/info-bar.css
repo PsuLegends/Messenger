@@ -1,0 +1,27 @@
+/* components/info-bar/info-bar.css (ВОЗВРАЩАЕМ СТАТИЧНЫЙ СТИЛЬ) */
+
+#info-bar {
+    height: 2.5vh;
+    min-height: 20px;
+    padding: 0 15px;
+    /* ИЗМЕНЕНО: Возвращаем градиент и конкретные цвета */
+    background: linear-gradient(to right, #1e1e1e, #1e1e2d, #1e1e1e);
+    border-top: 1px solid #333;
+    font-size: 12px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #888;
+    
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    
+    flex-wrap: wrap; 
+    gap: 15px;
+    overflow: hidden;
+    
+    transition: all 0.3s ease;
+} 
+
+#info-bar.hidden {
+    display: none;
+}

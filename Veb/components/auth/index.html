@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Astralis App</title>
+    <!-- Основные стили для всей оболочки -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- 
+        #root - это главный контейнер, куда JS будет "рисовать" 
+        наши компоненты (сначала форму входа, потом приложение).
+    -->
+    <div id="root"></div>
+
+    <!-- 
+        #info-bar - это отдельный контейнер для нашей 
+        отладочной информации. Он вне #root, т.к. это служебный элемент.
+    -->
+    <div id="info-bar"></div>
+
+    <!-- 
+        Подключаем главный JS-файл как модуль, 
+        это позволит нам использовать import/export.
+    -->
+    <script type="module" src="main.js"></script>
+</body>
+</html>

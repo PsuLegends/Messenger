@@ -4,7 +4,7 @@
 #include <sstream>
 
 WebSocketServer::WebSocketServer(int port) : port(port) {}
-
+static bool is_authenticated = false;
 static std::string readFile(const std::string &path)
 {
     std::ifstream file(path, std::ios::binary);
@@ -14,7 +14,87 @@ static std::string readFile(const std::string &path)
     ss << file.rdbuf();
     return ss.str();
 }
-static bool is_authenticated = false;
+static std::string detectMime(const std::string &path)
+{
+    static const std::unordered_map<std::string, std::string> m{
+        {".html", "text/html; charset=utf-8"}, {".css", "text/css; charset=utf-8"}, {".js", "application/javascript; charset=utf-8"}, {".png", "image/png"}, {".jpg", "image/jpeg"}, {".jpeg", "image/jpeg"}, {".gif", "image/gif"}};
+    auto ext = fs::path(path).extension().string();
+    if (auto it = m.find(ext); it != m.end())
+        return it->second;
+    return "application/octet-stream";
+}
+static void handleStaticFile(auto *res, auto *req, const std::string& basePath, const std::string_view& url, bool authenticationRequired = false) {
+    // Проверка аутентификации, если требуется
+    if (authenticationRequired && !is_authenticated) {
+        res->writeStatus("403 Forbidden")->end("Access denied. Please login first.");
+        return;
+    }
+
+    std::string filePath;
+    std::string relativePath;
+
+    // Определяем относительный путь к файлу
+    // Если url начинается с basePath, убираем basePath из url, чтобы получить относительный путь.
+    // Это для случаев, когда вы хотите обрабатывать что-то вроде /main/*, где /main это basePath
+    // Если basePath - это "src/www" и url - "/style.css", то relativePath будет "style.css"
+    // Если basePath - это "src/www/main" и url - "/main/script.js", то relativePath будет "script.js"
+
+    // Этот подход более гибок и позволяет избежать жесткой привязки к началу URL
+    // в обработчиках app.get, которые используют URL с подстановочными знаками.
+
+    // Для случаев типа app.get("/style.css")
+    if (url.find_first_of('.') != std::string::npos) { // Простое предположение, что это файл
+        relativePath = std::string(url);
+        // Удаляем ведущий слэш, если он есть, чтобы путь был относительным к basePath
+        if (!relativePath.empty() && relativePath.front() == '/') {
+            relativePath.erase(0, 1);
+        }
+    } else { // Для случаев типа app.get("/main/*") или app.get("/image/*")
+        // Извлекаем часть URL после базового пути, если он есть
+        size_t base_url_pos = url.find(basePath.substr(basePath.find_last_of('/') + 1));
+        if (base_url_pos != std::string::npos) {
+            relativePath = std::string(url.substr(base_url_pos + basePath.substr(basePath.find_last_of('/') + 1).length()));
+            if (!relativePath.empty() && relativePath.front() == '/') {
+                relativePath.erase(0, 1); // Удаляем ведущий слэш для формирования пути
+            }
+        } else {
+            relativePath = ""; // Если нет совпадения, оставляем пустым, обработаем как index.html
+        }
+    }
+
+
+    // Обработка случаев, когда URL указывает на директорию (например, "/main/")
+    if (relativePath.empty() || relativePath == "/") {
+        relativePath = "index.html";
+    }
+
+    // Защита от Path Traversal
+    if (relativePath.find("..") != std::string::npos || relativePath.find("./") != std::string::npos) {
+        res->writeStatus("400 Bad Request")->end("Invalid path");
+        return;
+    }
+
+    filePath = basePath + "/" + relativePath;
+
+    // Проверяем существование файла и что это действительно файл
+    if (!fs::exists(filePath) || !fs::is_regular_file(filePath)) {
+        res->writeStatus("404 Not Found")->end("File not found");
+        std::cerr << "File not found: " << filePath << std::endl; // Используем cerr для ошибок
+        return;
+    }
+
+    std::string content = readFile(filePath);
+    if (content.empty()) {
+        // Это может произойти, если файл пуст или произошла ошибка чтения, но fs::exists вернул true
+        res->writeStatus("500 Internal Server Error")->end("Error reading file");
+        std::cerr << "Error reading file content: " << filePath << std::endl;
+        return;
+    }
+
+    std::string mime = detectMime(filePath);
+    res->writeHeader("Content-Type", mime);
+    res->end(content);
+}
 void WebSocketServer::run()
 {
     uWS::App app({.key_file_name = "misc/key.pem",
@@ -22,105 +102,14 @@ void WebSocketServer::run()
                   .passphrase = "1234"});
 
     // HTTP маршруты для отдачи статических файлов
-    app.get("/", [](auto *res, auto *req)
+    app.get("/*", [](auto *res, auto *req)
             {
-        std::string content = readFile("src/www/index.html");
-        if (content.empty()) {
-            res->writeStatus("404 Not Found")->end("File not found");
-            std::cout<<"index.html не найден"<<std::endl;
-            return;
-        }
-        res->writeHeader("Content-Type", "text/html; charset=utf-8");
-        res->end(content); });
-
-    app.get("/style.css", [](auto *res, auto *req)
-            {
-        std::string content = readFile("src/www/style.css");
-        if (content.empty()) {
-            res->writeStatus("404 Not Found")->end("File not found");
-            std::cout<<"style.css не найден"<<std::endl;
-            return;
-        }
-        res->writeHeader("Content-Type", "text/css; charset=utf-8");
-        res->end(content); });
-
-    app.get("/script.js", [](auto *res, auto *req)
-            {
-        std::string content = readFile("src/www/script.js");
-        if (content.empty()) {
-            res->writeStatus("404 Not Found")->end("File not found");
-            std::cout<<"script.js не найден"<<std::endl;
-            return;
-        }
-        res->writeHeader("Content-Type", "application/javascript; charset=utf-8");
-        res->end(content); });
-    app.get("/image/*", [](auto *res, auto *req)
-            {
-                std::string_view url = req->getUrl();  // Пример: "/images/logo.png"
-                std::string filename = "src/www" + std::string(url);  // "src/www/images/logo.png"
-
-                std::string content = readFile(filename);
-                if (content.empty()) {
-                    res->writeStatus("404 Not Found")->end("Image not found");
-                    std::cout << "Картинка не найдена: " << filename << std::endl;
-                    return;
-                }
-
-                // Определим Content-Type по расширению
-                if (filename.ends_with(".png")) {
-                    res->writeHeader("Content-Type", "image/png");
-                } else if (filename.ends_with(".jpg") || filename.ends_with(".jpeg")) {
-                    res->writeHeader("Content-Type", "image/jpeg");
-                } else if (filename.ends_with(".gif")) {
-                    res->writeHeader("Content-Type", "image/gif");
-                } else {
-                    res->writeHeader("Content-Type", "application/octet-stream");
-                }
-
-    res->end(content); });
+        handleStaticFile(res, req, "src/www", req->getUrl());
+    });
     app.get("/main/*", [](auto *res, auto *req)
             {
-                if (!is_authenticated) {
-                    res->writeStatus("403 Forbidden")->end("Access denied. Please login first.");
-                    return;
-                }
-
-                std::string_view url = req->getUrl();  // например: /main/script.js
-                std::string relative = std::string(url.substr(5)); // убираем "/main"
-
-                if (relative.empty() || relative == "/") {
-                    relative = "index.html";  // по умолчанию
-                } else if (relative.front() == '/') {
-                    relative.erase(0, 1); // удаляем ведущий слэш
-                }
-
-                // Защита от path traversal
-                if (relative.find("..") != std::string::npos) {
-                    res->writeStatus("400 Bad Request")->end("Invalid path");
-                    return;
-                }
-
-                std::string full_path = "src/www/main/" + relative;
-
-                if (!fs::exists(full_path) || !fs::is_regular_file(full_path)) {
-                    res->writeStatus("404 Not Found")->end("File not found");
-                    std::cout << "Файл не найден: " << full_path << std::endl;
-                    return;
-                }
-
-                std::string content = readFile(full_path);
-
-                // MIME-тип
-                std::string mime = "application/octet-stream";
-                if (full_path.ends_with(".html")) mime = "text/html; charset=utf-8";
-                else if (full_path.ends_with(".css")) mime = "text/css; charset=utf-8";
-                else if (full_path.ends_with(".js")) mime = "application/javascript; charset=utf-8";
-                else if (full_path.ends_with(".png")) mime = "image/png";
-                else if (full_path.ends_with(".jpg") || full_path.ends_with(".jpeg")) mime = "image/jpeg";
-                else if (full_path.ends_with(".gif")) mime = "image/gif";
-
-                res->writeHeader("Content-Type", mime);
-                res->end(content); });
+        handleStaticFile(res, req, "src/www/", req->getUrl(), true);
+    });
 
     // WebSocket сервер
     app.ws<PerSocketData>("/*", {.compression = uWS::CompressOptions(uWS::DEDICATED_COMPRESSOR | uWS::DEDICATED_DECOMPRESSOR),
@@ -133,11 +122,10 @@ void WebSocketServer::run()
                                  .upgrade = nullptr,
                                  .open = [](auto *ws)
                                  {
-            std::cout << "Новое WebSocket соединение открыто." << std::endl;
-            // Можно отправить приветственное сообщение или запрос на аутентификацию
-            /*ws->send(R"({"action":"request_auth","message":"Пожалуйста, войдите или зарегистрируйтесь"})", uWS::OpCode::TEXT);*/ },
-                                 .message = [](auto *ws, std::string_view message, uWS::OpCode opCode)
-                                 {
+                                    std::cout << "Новое WebSocket соединение открыто." << std::endl;
+                                 },
+                                 .message = [this](auto *ws, std::string_view message, uWS::OpCode opCode)
+                                    {
                                     std::cout << "Получено сообщение: " << message << std::endl;
 
                                     try {
@@ -197,21 +185,4 @@ void WebSocketServer::run()
             std::cerr << "Не удалось открыть порт " << port << std::endl;
         } })
         .run();
-}
-static json readMainDirectory(const std::string &path)
-{
-    json result = json::array();
-
-    for (const auto &entry : fs::directory_iterator(path))
-    {
-        if (entry.is_regular_file())
-        {
-            std::string name = entry.path().filename().string();
-            std::string content = readFile(entry.path().string());
-            result.push_back({{"filename", name},
-                              {"content", content}});
-        }
-    }
-
-    return result;
 }

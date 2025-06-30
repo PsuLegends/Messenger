@@ -4,6 +4,11 @@
 #include <string>
 #include <string_view>
 #include "json.hpp"
+#include <unordered_map>
+#include <functional>
+#include "../base/base.h"
+#include <mutex>
+#include <algorithm>
 using json = nlohmann::json;
 namespace fs = std::filesystem;
 class WebSocketServer {
@@ -17,6 +22,6 @@ private:
     struct PerSocketData {
         // Можно добавить поля для каждого клиента
     };
-
+    //std::string detectMime(const std::string &path);
     void setupRoutes(uWS::App& app);
 };

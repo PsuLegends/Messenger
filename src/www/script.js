@@ -20,7 +20,7 @@ const WEBSOCKET_URL = 'http://25.18.47.111:9001'; // <-- ЗАМЕНИ НА ВА�
 function animateAndRedirect() {
     container.classList.add('disappearing');
     setTimeout(() => {
-        window.location.href = '../main/index.html';
+        window.location.href = '/main/index.html';
     }, 500);
 }
 
@@ -54,7 +54,7 @@ function sendDataViaWebSocket(dataToSend) {
             // Через 500 мс (после анимации) — абсолютный переход на главную страницу
             setTimeout(() => {
                 window.location.href = '/main/index.html';
-            }, 500);
+            }, 100);
         } else {
             console.error("Сервер вернул ошибку:", serverResponse.message);
             alert("Ошибка: " + serverResponse.message);

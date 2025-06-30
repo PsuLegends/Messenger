@@ -1,56 +1,265 @@
-/* components/auth/auth.css */
+/* components/auth/auth.css (ОКОНЧАТЕЛЬНОЕ РЕШЕНИЕ) */
 
-/* Контейнер, который центрирует нашу форму на экране */
-.auth-container {
-    width: 100%;
-    height: 100%;
+.auth-component-wrapper {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-primary);
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
 }
 
-/* Сама форма */
-.auth-form {
-    background-color: var(--bg-secondary); /* ИЗМЕНЕНО */
-    padding: 40px;
-    border-radius: 12px;
-    border: 1px solid var(--border-color); /* ИЗМЕНЕНО */
-    box-shadow: 0 10px 30px var(--shadow-color); /* ИЗМЕНЕНО */
-    width: 100%;
-    max-width: 400px;
+.auth-component-wrapper * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.auth-component-wrapper h1 {
+    font-weight: 700;
+    margin: 0 0 10px;
+    font-size: 2.2rem;
+    color: var(--text-primary);
+}
+
+.auth-component-wrapper .overlay-panel h1 {
+    color: var(--text-on-accent);
+}
+
+.auth-component-wrapper p {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    margin: 20px 0 30px;
+}
+
+.auth-component-wrapper span,
+.auth-component-wrapper a {
+    font-size: 14px;
+    text-decoration: none;
+    margin: 15px 0;
+    color: var(--text-secondary);
+    transition: color 0.2s ease-in-out;
+}
+
+.auth-component-wrapper a:hover {
+    color: var(--accent-color);
+}
+
+.auth-component-wrapper button {
+    position: relative;
+    overflow: hidden;
+    border-radius: 20px;
+    
+    /* ИЗМЕНЕНИЕ 1: Применяем тонкую обводку из переменной */
+    border: 1px solid var(--button-border-color); 
+    
+    /* ИЗМЕНЕНИЕ 2: Убираем цвет фона и добавляем градиент */
+    background-color: transparent; /* Убираем, чтобы градиент был виден */
+    background-image: var(--button-gradient);
+    
+    color: var(--text-on-accent);
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    /* ИЗМЕНЕНИЕ 3: Добавляем плавный переход для background-image */
+    transition: transform 80ms ease-in, background-image 0.4s ease;
+}
+
+.auth-component-wrapper button:active {
+    transform: scale(0.95);
+}
+
+.auth-component-wrapper button:focus {
+    outline: none;
+}
+
+.auth-component-wrapper button:not(.ghost):hover {
+    background-image: var(--button-gradient-hover);
+    /* border-color остается прежним для плавности */
+}
+
+.auth-component-wrapper button.ghost {
+    background-color: transparent;
+    border-color: #ffffff;
+    color: #ffffff;
+    background-image: none;
+}
+.auth-component-wrapper button.ghost:hover {
+    background-color: rgba(255,255,255,0.15);
+}
+
+/* Формы ВСЕГДА имеют непрозрачный фон */
+.auth-component-wrapper form {
+    background-color: var(--bg-secondary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
     text-align: center;
 }
 
-.auth-form h1 {
-    margin-bottom: 25px;
-    font-size: 2rem;
-}
-
-.auth-form .form-input {
-    width: 100%;
+.auth-component-wrapper input {
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
     padding: 12px 15px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    border: 1px solid var(--border-color-strong); /* ИЗМЕНЕНО */
-    background-color: var(--bg-tertiary);        /* ИЗМЕНЕНО */
-    color: var(--text-primary);                 /* ИЗМЕНЕНО */
-    font-size: 16px;
-}
-
-.auth-form .form-button {
+    margin: 8px 0;
     width: 100%;
-    padding: 12px 15px;
-    border-radius: 8px;
-    border: none;
-    background-color: var(--accent-color);       /* ИЗМЕНЕНО */
-    color: var(--text-on-accent);              /* ИЗМЕНЕНО */
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
+    border-radius: 15px;
+    font-family: 'Poppins', sans-serif;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.auth-form .form-button:hover {
-    background-color: var(--accent-color-hover); /* ИЗМЕНЕНО */
+.auth-component-wrapper input:focus {
+    border-color: var(--accent-color);
+    outline: none;
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 20%, transparent);
+}
+
+.auth-component-wrapper .social-container a {
+    height: 40px;
+    width: 40px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-tertiary);
+    border: 1px solid var(--border-color);
+    color: var(--text-secondary);
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.auth-component-wrapper .social-container a:hover {
+    color: var(--text-primary);
+    border-color: var(--accent-color);
+}
+
+.auth-component-wrapper .social-container svg {
+    width: 50%;
+    height: 50%;
+}
+
+.auth-component-wrapper .container {
+    background-color: var(--bg-secondary);
+    box-shadow: var(--shadow-color) 0 14px 28px, var(--shadow-color) 0 10px 10px;
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    width: 768px;
+    max-width: 100%;
+    min-height: 480px;
+}
+
+.auth-component-wrapper .form-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+}
+.auth-component-wrapper .sign-in-container {
+    left: 0;
+    width: 50%;
+    z-index: 2;
+}
+
+/* Форма регистрации по умолчанию скрыта */
+.auth-component-wrapper .sign-up-container {
+    left: 0;
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+}
+
+/* 
+  ВАЖНО: У формы регистрации ТОЖЕ есть свой фон. Она НЕ прозрачная.
+  Мы убираем это правило, так как оно уже задано для всех <form> выше.
+*/
+/* .auth-component-wrapper .sign-up-container form { ... } */
+
+.auth-component-wrapper .overlay-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 100;
+    transition: transform 0.6s ease-in-out;
+}
+
+/* 
+  ИЗМЕНЕНИЕ 1: ЗАДАЕМ ГРАДИЕНТ РОДИТЕЛЮ, А НЕ ДОЧЕРНИМ ПАНЕЛЯМ.
+  Это гарантирует отсутствие "шва". Используем переменную из theme.css
+*/
+.auth-component-wrapper .overlay {
+    background: var(--auth-overlay-gradient);
+    background-size: cover;
+    color: #ffffff; 
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+}
+
+.auth-component-wrapper .overlay-panel {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    transform: translateX(0);
+}
+
+.auth-component-wrapper .overlay-right {
+    right: 0;
+    /* Никаких transform, никаких background */
+}
+
+
+/* ... Анимация остается без изменений ... */
+.auth-component-wrapper .container.right-panel-active .overlay-container {
+    transform: translateX(-100%);
+}
+
+.auth-component-wrapper .container.right-panel-active .overlay {
+    transform: translateX(50%);
+}
+
+.auth-component-wrapper .container.right-panel-active .sign-in-container {
+    transform: translateX(100%);
+}
+
+.auth-component-wrapper .container.right-panel-active .sign-up-container {
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+    animation: auth-show 0.6s;
+}
+
+@keyframes auth-show {
+    0%, 49.99% {
+        opacity: 0;
+        z-index: 1;
+    }
+    50%, 100% {
+        opacity: 1;
+        z-index: 5;
+    }
 }

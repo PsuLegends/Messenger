@@ -1,0 +1,33 @@
+этот крут /* -- СТРУКТУРА 1: РАДИАЛЬНЫЙ "ПРОЖЕКТОР" -- */
+--auth-overlay-left-gradient: radial-gradient(circle, #92E1E2, #18A5A7, #0D4671); 
+
+этот тоже /* -- СТРУКТУРА 4: МНОГОСЛОЙНЫЙ ГРАДИЕНТ "АВРОРА" -- */
+--auth-overlay-left-gradient: 
+    radial-gradient(at 0% 0%, #BFFFC7 0px, transparent 50%),
+    radial-gradient(at 90% 95%, #54ACBF 0px, transparent 50%),
+    radial-gradient(at 50% 50%, #18A5A7 0px, transparent 50%),
+    linear-gradient(120deg, #0D4671, #26658C); 
+
+/* -- СТРУКТУРА 5: "ЖАЛЮЗИ" ИЗ ГРАДИЕНТА -- */
+--auth-overlay-left-gradient: linear-gradient(160deg, 
+    #0D4671 0% 20%, 
+    #26658C 20% 40%, 
+    #18A5A7 40% 70%, 
+    #92E1E2 70% 100%
+); это тоже интересно, можно запомнить не для этого а для фона, можно будет добавить у аутентификации, чтобы не просто чёрный был
+
+/* -- СТРУКТУРА 2: "ХРУСТАЛЬНЫЕ ГРАНИ" -- */
+--auth-overlay-left-gradient:
+    linear-gradient(27deg, rgba(24, 165, 167, 0.8), rgba(24, 165, 167, 0) 70%),
+    linear-gradient(135deg, rgba(84, 172, 191, 0.7), rgba(84, 172, 191, 0) 80%),
+    linear-gradient(220deg, rgba(38, 101, 140, 0.9), rgba(38, 101, 140, 0) 75%),
+    #0D4671; /* Сплошной цвет фона под градиентами */
+
+    /* -- СТРУКТУРА 3: "ШЕЛКОВАЯ ТКАНЬ" -- */
+--auth-overlay-left-gradient:
+    radial-gradient(ellipse at 70% 20%, #A7EBF2, transparent 60%),
+    radial-gradient(ellipse at 20% 80%, #18A5A7, transparent 70%),
+    radial-gradient(ellipse at 100% 100%, #26658C, transparent 80%),
+    #0D4671; - ну ок, но не очень
+
+    

@@ -1,45 +1,61 @@
-/* components/theme-switcher/theme.css */
+/* components/theme-switcher/theme.css (С ГРАДИЕНТАМИ ДЛЯ КНОПОК) */
 
-/* 
-  :root — это как бы "глобальный" элемент. 
-  Здесь мы определяем переменные для нашей темы по умолчанию (темной).
-*/
 :root {
-  --bg-primary: #121212;        /* Основной фон (самый темный) */
-  --bg-secondary: #1e1e1e;      /* Второстепенный фон (чуть светлее) */
-  --bg-tertiary: #2b2b2b;       /* Третичный фон (для меню, полей ввода) */
-  
-  --text-primary: #e0e0e0;      /* Основной текст */
-  --text-secondary: #a0a0a0;     /* Второстепенный, неактивный текст */
-  --text-on-accent: #ffffff;    /* Текст на цветных кнопках */
-  
-  --border-color: #333;         /* Цвет рамок и разделителей */
-  --border-color-strong: #444;  /* Более заметная рамка */
-  
-  --accent-color: #0d6efd;       /* Основной цветной акцент (синий) */
-  --accent-color-hover: #0b5ed7; /* Акцент при наведении */
-  
-  --shadow-color: rgba(0, 0, 0, 0.5); /* Цвет тени */
+  /* Основные переменные темы */
+  --bg-primary: #121212;
+  --bg-secondary: #1e1e1e;
+  --bg-tertiary: #2b2b2b;
+  --text-primary: #e0e0e0;
+  --text-secondary: #a0a0a0;
+  --text-on-accent: #ffffff;
+  --border-color: #333;
+  --border-color-strong: #444;
+  --shadow-color: rgba(0, 0, 0, 0.5);
+
+  /* 
+    ==== ИЗМЕНЕНИЕ 1: Новые переменные для кнопок в ТЕМНОЙ теме ====
+    - Градиент для кнопки от бирюзового к более светлому.
+    - Градиент для наведения, меняющий направление.
+    - Светлая обводка для эффекта "свечения".
+  */
+  --button-gradient: linear-gradient(45deg, #18A5A7, #54ACBF);
+  --button-gradient-hover: linear-gradient(-45deg, #18A5A7, #54ACBF);
+  --button-border-color: #92E1E2;
+
+  /* Градиент "Аврора" для оверлея (остается без изменений) */
+  --auth-overlay-gradient: 
+    radial-gradient(at 0% 0%, #BFFFC7 0px, transparent 50%),
+    radial-gradient(at 90% 95%, #54ACBF 0px, transparent 50%),
+    radial-gradient(at 50% 50%, #18A5A7 0px, transparent 50%),
+    linear-gradient(120deg, #0D4671, #26658C);
 }
 
-/* 
-  Когда мы добавим к <body> класс "light-theme", 
-  все эти переменные будут ПЕРЕОПРЕДЕЛЕНЫ на новые значения.
-*/
+
 body.light-theme {
+  /* Переопределение основных переменных */
   --bg-primary: #f8f9fa;
   --bg-secondary: #ffffff;
   --bg-tertiary: #f1f3f5;
-  
   --text-primary: #212529;
   --text-secondary: #6c757d;
   --text-on-accent: #ffffff;
-  
   --border-color: #dee2e6;
   --border-color-strong: #ced4da;
-  
-  --accent-color: #0d6efd;
-  --accent-color-hover: #0b5ed7;
-  
   --shadow-color: rgba(0, 0, 0, 0.15);
+  
+  /* 
+    ==== ИЗМЕНЕНИЕ 2: Новые переменные для кнопок в СВЕТЛОЙ теме ====
+    - Градиент от фиолетово-красного к малиновому.
+    - Градиент для наведения, меняющий направление.
+    - Обводка в тон градиенту.
+  */
+  --button-gradient: linear-gradient(45deg, #C71585, #DC143C);
+  --button-gradient-hover: linear-gradient(-45deg, #C71585, #DC143C);
+  --button-border-color: #C71585;
+
+  /* Градиент "Закат" для оверлея (остается без изменений) */
+  --auth-overlay-gradient: 
+    radial-gradient(at 25% 25%, rgba(255, 255, 255, 0.5) 0px, transparent 50%),
+    radial-gradient(at 75% 75%, rgba(255, 255, 255, 0.3) 0px, transparent 50%),
+    linear-gradient(110deg, #C71585, #DC143C, #C71585);
 }

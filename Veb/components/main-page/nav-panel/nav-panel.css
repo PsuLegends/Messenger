@@ -1,0 +1,27 @@
+/* Стили для элементов левой навигационной панели */
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Расстояние между иконкой и текстом */
+    
+    padding: 10px 12px; /* Внутренние отступы для объема */
+    border-radius: 8px; /* Скругляем углы */
+    
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.nav-item:hover {
+    background-color: var(--border-color);
+    color: var(--text-primary);
+}
+
+.nav-icon {
+    width: 20px;
+    height: 20px;
+}

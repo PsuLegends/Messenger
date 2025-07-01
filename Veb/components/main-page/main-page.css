@@ -1,0 +1,48 @@
+/* --- Каркас для главной страницы --- */
+.main-page-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    gap: 1.5%;
+    padding: 1.5%;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    
+    /* НОВОЕ: Выравниваем все колонки по верхнему краю */
+    align-items: flex-start;
+}
+
+/* Общие стили для всех трех колонок */
+.main-nav, .chat-area, .chat-list {
+    /* height: 100%; <-- УБИРАЕМ общее правило высоты */
+    overflow-y: auto;
+    background-color: var(--bg-secondary);
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+/* --- Пропорции и ВЫСОТА колонок --- */
+
+/* 1. Левая и Правая панели (теперь у них нет высоты, она будет авто) */
+.main-nav, .chat-list {
+    flex-shrink: 0;
+    /* Добавляем внутренние отступы, чтобы контент не прилипал к краям */
+    padding: 8px; 
+}
+
+.main-nav {
+    flex-basis: 18.5%;
+    min-width: 200px;
+}
+.chat-list {
+    flex-basis: 28.5%;
+    min-width: 240px;
+}
+
+/* 2. Центральная область (оставляем 100% высоты) */
+.chat-area {
+    height: 100%; /* <-- ОСТАВЛЯЕМ ВЫСОТУ ТОЛЬКО ЗДЕСЬ */
+    flex-basis: 50%;
+    flex-grow: 1;
+    min-width: 300px;
+}

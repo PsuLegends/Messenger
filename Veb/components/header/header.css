@@ -56,13 +56,20 @@
 .dropdown-menu.show {
     display: block;
 }
+
+/* Изменяем стиль ссылки в меню */
 .dropdown-menu a {
-    color: var(--text-primary); /* ИЗМЕНЕНО */
+    color: var(--text-primary);
     padding: 12px 16px;
     text-decoration: none;
-    display: block;
     transition: background-color 0.2s;
+    
+    /* НОВОЕ: Превращаем ссылку в flex-контейнер для выравнивания */
+    display: flex;
+    align-items: center; /* Выравниваем иконку и текст по вертикали */
+    gap: 12px;           /* Добавляем отступ между иконкой и текстом */
 }
+
 .dropdown-menu a:first-child {
     border-top-left-radius: 8px;
     border-top-right-radius: 8px;
@@ -81,6 +88,32 @@
 .header-left:hover {
     color: var(--text-primary); /* ИЗМЕНЕНО */
 }
+
+/* НОВОЕ: Стиль для разделителя в меню */
+.dropdown-divider {
+    height: 1px;
+    margin: 8px 0;
+    overflow: hidden;
+    background-color: var(--border-color-strong);
+}
+
+/* НОВОЕ: Стиль для ссылки "Выйти" */
+.logout-link {
+    color: #f85959 !important; /* Делаем текст красным, !important чтобы перебить общий стиль для .dropdown-menu a */
+}
+
+.logout-link:hover {
+    color: #ffffff !important; /* При наведении текст становится белым */
+    background-color: #d63333 !important; /* А фон - насыщенно-красным */
+}
+
+/* НОВОЕ: Стиль для самих иконок */
+.dropdown-icon {
+    width: 18px;    /* Задаем одинаковую ширину */
+    height: 18px;   /* и высоту для всех иконок */
+    flex-shrink: 0; /* Запрещаем иконке сжиматься, если текст длинный */
+}
+
 @media (max-width: 480px) {
     .header-content {
         padding: 10px 15px;

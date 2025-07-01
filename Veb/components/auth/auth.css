@@ -1,53 +1,63 @@
-/* components/auth/auth.css (ОКОНЧАТЕЛЬНОЕ РЕШЕНИЕ) */
+/* components/auth/auth.css  */
 
+/* Самый главный контейнер */
 .auth-component-wrapper {
-    font-family: 'Poppins', sans-serif;
-    background: var(--bg-primary);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
+    font-family: 'Poppins', sans-serif;  /* Устанавливает шрифт 'Poppins' для всего, что находится внутри этого блока. */
+    background: var(--bg-primary);       /* Устанавливает цвет фона в зависимости он темы */
+    
+    width: 100%;                         
     height: 100%;
-    position: relative;
-    overflow: hidden;
+    
+    display: flex;                       /* Набор правиля для центрирования формы */
+    justify-content: center;             
+    align-items: center;                 
+    
+    position: relative;                  /* Превращает блок в систему координат, нужно для анимаций, чтобы не выходить за границу контейнера */
+    overflow: hidden;                    /* Следит, чтобы элементы, оказавшиеся за границей контейнера были не видны, шторка вылезает за блок и становится невидимой */
 }
 
+/* Cброс стилей для всех дочерних элементов */
 .auth-component-wrapper * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    box-sizing: border-box;  /* Гарантирует, что рамки (border) и внутренние отступы (padding) не будут увеличивать итоговую ширину и высоту элемента */
+    margin: 0;               /* Убирает внешние отступы по умолчанию (например, у заголовков h1 или параграфов p), чтобы мы могли задать их сами с нуля */
+    padding: 0;              /* Убирает внутренние отступы по умолчанию */
 }
 
+/* Стили для главного заголовка формы (Sign In) */
 .auth-component-wrapper h1 {
-    font-weight: 700;
-    margin: 0 0 10px;
-    font-size: 2.2rem;
-    color: var(--text-primary);
+    font-weight: 700;             /* Делает текст жирным (значение 700 это то же самое, что и 'bold') */
+    margin: 0 0 10px;             /* Создает отступ в 10 пикселей СНИЗУ под заголовком */
+    font-size: 2.2rem;            /* Задает очень крупный размер шрифта */
+    color: var(--text-primary);   /* Устанавливает цвет текста из переменной, чтобы он менялся вместе с темой (светлый/темный) */
 }
 
+/* Переопределение цвета для заголовка на движущейся шторке */
 .auth-component-wrapper .overlay-panel h1 {
-    color: var(--text-on-accent);
+    color: var(--text-on-accent);     /* Заменяет цвет заголовка для градиента */
 }
 
+/* Стили для параграфов на шторке */
 .auth-component-wrapper p {
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    letter-spacing: 0.5px;
-    margin: 20px 0 30px;
+    font-size: 14px;           /* Устанавливает стандартный размер шрифта */
+    font-weight: 400;          /* Задает обычную толщину шрифта (400 - это 'normal') */
+    line-height: 20px;         /* Увеличивает расстояние между строками текста, если он занимает несколько строк */
+    letter-spacing: 0.5px;     /* Немного увеличивает расстояние между буквами */
+    margin: 20px 0 30px;       /* Задает вертикальные отступы: 20px сверху и 30px снизу. Горизонтальные отступы равны нулю */
 }
 
+/* Стили для вспомогательного текста (span) и ссылок (a) */
 .auth-component-wrapper span,
 .auth-component-wrapper a {
-    font-size: 14px;
-    text-decoration: none;
-    margin: 15px 0;
-    color: var(--text-secondary);
-    transition: color 0.2s ease-in-out;
+    font-size: 14px;                      /* Задает тот же стандартный размер шрифта, что и у параграфов */
+    text-decoration: none;                /* Убирает стандартное подчеркивание у ссылок */
+    margin: 15px 0;                       /* Добавляет вертикальные отступы по 15px сверху и снизу, чтобы текст не "прилипал" к другим элементам */
+    color: var(--text-secondary);         /* Устанавливает приглушенный цвет текста, показывая, что это второстепенная информация */
+    transition: color 0.2s ease-in-out;   /* Добавляет плавный смену цвета при наведении */
 }
 
+/* Устанавливает цвет ссылки */
 .auth-component-wrapper a:hover {
-    color: var(--accent-color);
+    color: var(--accent-color); /*  */
 }
 
 .auth-component-wrapper button {
